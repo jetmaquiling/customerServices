@@ -1,0 +1,26 @@
+.main{
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgb(182, 182, 182);
+}
+
+.head{
+    background-color: rgb(112, 0, 0);
+    height: 10vh;
+}
+
+.titleLabel{
+    color: #fff;
+    margin: 0px;
+    padding: 15px;
+    font-size: 30px;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+
