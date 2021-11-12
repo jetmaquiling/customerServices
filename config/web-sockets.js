@@ -1,4 +1,4 @@
 import io from 'socket.io-client';
 
-const STRAPI_ENDPOINT = 'http://localhost:1337';
+const STRAPI_ENDPOINT = 'https://pcmjourney.herokuapp.com';
 export const socket = io(STRAPI_ENDPOINT);
