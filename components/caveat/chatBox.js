@@ -95,7 +95,7 @@ export default function ChatBox({connection, setConnection}) {
       socket.on('messages', (data) => {
         console.log("FROM THE USER THIS IS AUSEEFFECTY" , data)
         try{
-          setMessages(JSON.parse(data.conversation.messages))  
+          setMessages(data.conversation.messages)  
           scrollToBottom("messageBox")
           socket.removeAllListeners("details");
         }catch(err){}

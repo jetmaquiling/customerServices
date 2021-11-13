@@ -122,9 +122,11 @@ export default function Chat() {
             console.log("effect",data)
             setUserData(data);
             try {
-                setMessages(JSON.parse(data.conversation.messages))
+                setMessages(data.conversation.messages)
                 scrollToBottom("userMessageBox")
-            }catch(err) {}
+            }catch(err) {
+                console.log(err)
+            }
             
         });
         
@@ -133,8 +135,7 @@ export default function Chat() {
             scrollToBottom("userMessageBox")
         });
 
-        let username = getCookie('userId')
-        let room = getCookie('roomId')
+     
 
       
 
