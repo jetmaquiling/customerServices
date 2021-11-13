@@ -6,15 +6,8 @@ import { socket } from '@/config/web-sockets'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/styles'
 import ChatMessage from './chatmessage'
-
-const useStyles = makeStyles( ({
-    root: {
-      width: '100%',
-      margin:  '0px 0px',
-      fontSize: "20px",
-      backgroundColor: '#fff'
-    },
-  }));
+import SendIcon from '@material-ui/icons/Send';
+import CloseIcon from '@material-ui/icons/Close';
 
   function scrollToBottom (id) {
     var div = document.getElementById(id);
@@ -55,7 +48,6 @@ function randomNumber() {
 
 
 export default function Chat() {
-    const classes = useStyles();
     const [first, setFirst] = React.useState(true)
     const [open, setOpen] = React.useState(false)
     const [messages, setMessages] =  React.useState([]);
@@ -97,8 +89,10 @@ export default function Chat() {
 
 
     const handleClick = (e) => {
+        console.log(message)
         if(message) {
-            socket.emit('sendMessage',{ user: userData, message, messages }, (error) => {
+            
+            socket.emit('sendMessage',{ userData, message, messages }, (error) => {
                 if(error) {
                     alert(error)
                     history.push('/join');
@@ -121,20 +115,25 @@ export default function Chat() {
         socket.on('welcome', (data) => {
             console.log("effect",data)
             setUserData(data);
-            try {
+            if(typeof data.conversation.messages == "string"){
+                setMessages(JSON.parse(data.conversation.messages))
+            }else{
                 setMessages(data.conversation.messages)
-                scrollToBottom("userMessageBox")
-            }catch(err) {
-                console.log(err)
             }
-            
+           
+            scrollToBottom("userMessageBox")
         });
         
-        socket.on('message', (message, error) => {
+        socket.on('deliverClientMessages', (message, error) => {
+
             setMessages(msgs => [ ...msgs, message ]);
             scrollToBottom("userMessageBox")
         });
 
+        socket.on('resetCookies', (error) => {
+            console.log("RESETTING COOKIE")
+            setFirst(true)
+        });
      
 
       
@@ -173,61 +172,66 @@ export default function Chat() {
     
         <div className={open && !first ? styles.container : styles.offcontainer}>
             <div className={styles.head}>
-                <h4 className={styles.label1}>Customer Service</h4>
-                <h4 className={styles.label2} onClick={toggle}>X</h4>
+                <h4 className={styles.label1}>Customer Service Representative</h4>
+                <div className={styles.label2} onClick={toggle}><CloseIcon/></div>
             </div>
         
             <div className={styles.messageBox} id="userMessageBox">
-                <ChatMessage conversation={messages}/>
+                <ChatMessage conversation={messages} setFirst={setFirst}/>
             </div>
 
 
             <div className={styles.inputBox}>
                 <TextField
                 id="outlined-multiline-static"
-                placeholder="Chat here..."
+                placeholder="Aa..."
                 multiline
                 variant="outlined"
-                className={classes.root}
                 value={message}
                 onKeyPress={handleEnter}
                 onChange={handleChange}
                 />
-                <h4 className={styles.sendButton} onClick={handleClick} >Send</h4>
+                <h4 className={styles.sendButton} onClick={handleClick} > <SendIcon style={{fontSize: '20px', color: '#1877F2'}}/></h4>
             </div>
                 
         </div>
 
         <div className={open && first ? styles.container : styles.offcontainer}>
             <div className={styles.head}>
-                <h4 className={styles.label1}>Ask Question</h4>
-                <h4 className={styles.label2} onClick={toggle}>X</h4>
+                <h4 className={styles.label1}>What can we help you with?</h4>
+                <div className={styles.label2} onClick={toggle}><CloseIcon/></div>
             </div>
                 
             <div className={styles.services}>
                 <div className={styles.questionContainer}>
-                    <div className={styles.question} onClick={handleStart}>
+                    <button className={styles.question} onClick={handleStart}>
                         What is This?
-                    </div>
-                    <div className={styles.question} onClick={handleStart}>
+                    </button>
+                    <button className={styles.question} onClick={handleStart}>
                         What is That?
-                    </div>
-                    <div className={styles.question} onClick={handleStart}>
+                    </button>
+                    <button className={styles.question} onClick={handleStart}>
                         How to do that?
-                    </div>
-                    <div className={styles.question} onClick={handleStart}>
+                    </button>
+                    <button className={styles.question} onClick={handleStart}>
                         Where to do this and that with a some of that?
-                    </div>
+                    </button>
 
-                    <div className={styles.question} onClick={handleStart}>
+                    <button className={styles.question} onClick={handleStart}>
                         Where to do this and that with a some of that?
-                    </div>
-                    <div className={styles.question} onClick={handleStart}>
+                    </button>
+                    <button className={styles.question} onClick={handleStart}>
                         Can I order this?
-                    </div>
-                    <div className={styles.question} onClick={handleStart}>
+                    </button>
+                    <button className={styles.question} onClick={handleStart}>
                         How Much is This?
-                    </div>
+                    </button>
+                    <button className={styles.question} onClick={handleStart}>
+                        How to return that?
+                    </button>
+                    <button className={styles.question} onClick={handleStart}>
+                        How Much are you giving me here?
+                    </button>
                 </div>
                 
             </div>                
@@ -235,8 +239,8 @@ export default function Chat() {
 
 
 
-        <div className={styles.floatButton} onClick={toggle}>
-            
+        <div className={open ? styles.closeFloatButton : styles.floatButton} onClick={toggle}>
+            Message
         </div>
 
 

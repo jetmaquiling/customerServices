@@ -7,17 +7,18 @@ import { socket } from '@/config/web-sockets'
 
   
 
-export default function ChatMessage({conversation}) {
+export default function ChatMessage({conversation, setFirst}) {
 
   
 
   return (
     <div className={styles.main}>
       
-       {
+       {conversation ?
         conversation.map((message, i) => {
           if(message.user === "DELETE"){
             document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+            setFirst(true)
             return(     
                   <h5 className={styles.endText}>This Chat has Ended.</h5>
             )
@@ -25,19 +26,20 @@ export default function ChatMessage({conversation}) {
           if(message.user === "CSR"){
             return(
                 <div key={i}  className={styles.clientBox}>
-                <h4 className={styles.clientText}>{message.text}</h4><h5 className={styles.clientUser}>{message.user}</h5>
+                <h4 className={styles.clientText}>{message.text}</h4>
                 </div>
             )
           }else{
             return (
             <div key={i}  className={styles.csrBox}>
-            <h5 className={styles.csrUser}>{message.user}</h5><h4 className={styles.csrText}>{message.text}</h4>
+            <h4 className={styles.csrText}>{message.text}</h4>
             </div>
             )
           }
          
         }
-        )
+        ):
+        <h5 className={styles.endText}>No Conversation</h5>
     }
         
     </div>

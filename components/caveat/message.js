@@ -13,7 +13,7 @@ export default function Message({conversation}) {
 
   return (
     <div className={styles.main}>
-       {conversation &&
+       {conversation ?
         conversation.map((message, i) => {
 
           if(message.user === "CSR"){
@@ -33,8 +33,9 @@ export default function Message({conversation}) {
               
           }
          
-        }
-        )
+        } 
+        ):
+        <h5 className={styles.endText}>No Conversation</h5>
     }
         
     </div>

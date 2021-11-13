@@ -2,62 +2,95 @@
 
 
 .floatButton{
-    width: 50px;
+    width: 150px;
     height: 50px;
-    background: linear-gradient(-15deg, #f15151, rgb(165, 42, 42));
+    background-color: rgb(150, 1, 1);
+    color: #fff;
+    font-size: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
     z-index: 1000;
-    bottom: 20px;
-    right: 20px;
+    bottom: 0px;
+    right: 50px;
     transition: 0.5s;
-    cursor: url('/Svg/pointer.cur'),auto;
-    box-shadow: 5px 5px 10px  #00000096;
-    border-radius: 50%;
+    box-shadow: 0px -5px 10px  #57575796;
     cursor: pointer;
 }
 
 
+.closeFloatButton{
+    width: 0px;
+    height: 50px;
+    background-color: rgb(150, 1, 1);
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    bottom: 0px;
+    right: 50px;
+    transition: 0.5s;
+    box-shadow: 0px -5px 10px  #57575796;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+
+
 .container{
-    width: 400px;
+    width: 350px;
     height: 450px;
     position: fixed;
-    bottom: 50px;
+    bottom: 0px;
     right: 50px;
-    background-color: rgb(247, 165, 165);
-    border-radius: 20px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px 10px 0px 0px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition: 0.5s;
 }
 
 .offcontainer{
-    display: none;
+    width: 350px;
+    height: 0px;
+    position: fixed;
+    bottom: 0px;
+    right: 50px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px 10px 0px 0px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
 }
 
 .label1{
     margin: 0px;
-    background-color: rgb(97, 27, 27);
-    padding: 15px;
-    color: #fff;
-    font-size: 20px;
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
     flex-grow: 1;
+    font-weight: 600;
 }
 
 .label2{
-    margin: 0px;
-    background-color: rgb(97, 27, 27);
-    padding: 15px 20px;
-    color: #fff;
-    font-size: 20px;
+    margin: 0px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
     cursor: pointer;
 }
 
 .head{
     display: flex;
-    align-items: center
+    align-items: center;
+    box-shadow: 5px 0px 10px  #57575796;
 }
 
 .messageBox{
@@ -75,14 +108,14 @@
 }
 
 .sendButton{
-    width: 20%;
+    display: flex;
     text-align: center;
-    background-color: brown;
+    background-color: rgb(255, 255, 255);
     cursor: pointer;
-    border-radius: 20px;
-    margin: 0px 10px;
+    border-radius: 100px;
     padding: 10px;
     color: #fff;
+    margin: 5px;
 }
 
 
@@ -103,12 +136,40 @@
 }
 
 .question{
-    background-color: rgb(196, 9, 9);
+    background-color: rgb(163, 7, 7);
     color: #fff;
-    padding: 10px 20px;
-    margin: 5px 0px;
+    padding: 10px 15px;
+    margin: 3px 0px;
     border-radius: 40px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 300;
+    border: none;
     text-align: center;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .floatButton{
+        width: 120px;
+        height: 40px;
+        font-size: 18px;
+        right: 20px;
+    }
+    
+    .closeFloatButton{
+        right: 0px;
+    }
+    
+
+    .container{
+        width: 300px;
+        right: 20px;
+    
+    }
+    
+    .offcontainer{
+        width: 300px;
+        right: 20px;
+    }
 }

@@ -18,3 +18,17 @@ a {
 fieldset{
   display: none;
 }
+
+.MuiInputBase-root{
+  margin:  0px 0px !important;
+  font-size: 16px !important;
+  background-color: #fff !important;
+  border-radius: 30px !important;
+  padding: 10px 10px !important;
+  margin: 5px 5px !important;
+}
+
+
+.MuiFormControl-root{
+  width: 100% !important;
+}

@@ -55,7 +55,7 @@ export default function ChatBox({connection, setConnection}) {
     const sendMessage = (message) => {
       console.log(message)
       if(message && connection.conversation.id) {
-          socket.emit('adminMessage',{ userId: "CSR",conversationId: connection.conversation.id , room: connection.room, message, messages }, (error) => {
+          socket.emit('adminMessage',{ userId: connection.id,conversationId: connection.conversation.id , room: connection.room, message, messages }, (error) => {
               if(error) {
                   alert(error)
                   history.push('/join');
@@ -92,14 +92,18 @@ export default function ChatBox({connection, setConnection}) {
   }
 
    React.useEffect(() => {
-      socket.on('messages', (data) => {
-        console.log("FROM THE USER THIS IS AUSEEFFECTY" , data)
+      socket.on('deliverAdminMessages', (data) => {
+        console.log("Get Delivery from Server" , data)
         try{
-          setMessages(data.conversation.messages)  
+          if(typeof data.conversation.messages == "string"){
+            setMessages(JSON.parse(data.conversation.messages))
+          }else{
+              setMessages(data.conversation.messages)
+          }
           scrollToBottom("messageBox")
           socket.removeAllListeners("details");
-        }catch(err){}
-       
+        }catch(err){console.log(err)}
+        
       });
     
     }, [])

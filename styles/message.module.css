@@ -51,3 +51,10 @@
 .clientUser{
     margin: 0px 5px;
 }
+
+
+.endText{
+    text-align: center;
+    font-size: 15px;
+    margin: auto;
+}
